@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Although / Despite / However — Interactive Quiz</title>
+<link rel="icon" type="image/png" href="/concession-linkers/favicon.png">
+<style>
+  :root{
+    --navy:#0f2a4a;
+    --blue:#1a4d8f;
+    --lightblue:#eef3fb;
+    --green:#1f8a3d;
+    --green-bg:#e5f7e9;
+    --red:#c0392b;
+    --red-bg:#fdecea;
+    --gray:#5a6472;
+    --border:#dbe3ee;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family: Georgia, 'Times New Roman', serif;
+    margin:0;
+    background:#f4f6fa;
+    color:#1b1f27;
+  }
+  .topbar{height:10px; background:var(--navy);}
+  header{text-align:center; padding:28px 20px 10px;}
+  header h1{font-size:2.1em; margin:0; color:var(--navy); letter-spacing:0.5px;}
+  header p{font-family: Arial, sans-serif; color:var(--gray); font-style:italic; margin-top:6px;}
+  nav{
+    display:flex; justify-content:center; gap:12px;
+    margin:18px 0 30px; font-family: Arial, sans-serif; flex-wrap:wrap;
+  }
+  nav button{
+    padding:10px 22px; border-radius:8px; border:2px solid var(--blue);
+    background:#fff; color:var(--blue); font-size:1em; font-weight:bold; cursor:pointer; transition:0.15s;
+  }
+  nav button.active, nav button:hover{ background:var(--blue); color:#fff; }
+  .page{ display:none; max-width:900px; margin:0 auto 60px; padding:0 20px; }
+  .page.active{display:block;}
+  .card{
+    background:var(--lightblue); border:1px solid var(--border); border-radius:12px;
+    padding:24px 28px; margin-bottom:26px;
+  }
+  .card h2{ margin-top:0; color:var(--navy); font-size:1.5em; border-bottom:2px solid var(--border); padding-bottom:8px; }
+
+  table{ width:100%; border-collapse:collapse; font-family: Arial, sans-serif; font-size:0.96em; background:#fff; border-radius:8px; overflow:hidden;}
+  th, td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th{ background:var(--blue); color:#fff; }
+  tr:nth-child(even) td{ background:#f8fafd; }
+  td.linker{ font-weight:bold; color:var(--navy); white-space:nowrap; }
+  td.example{ font-style:italic; }
+
+  .q-block{
+    background:#fff; border:1px solid var(--border); border-radius:10px;
+    padding:16px 20px; margin-bottom:16px; font-family: Arial, sans-serif;
+    transition: background 0.25s, border-color 0.25s;
+  }
+  .q-block.correct{ background:var(--green-bg); border-color:var(--green); }
+  .q-block.incorrect{ background:var(--red-bg); border-color:var(--red); }
+  .q-num{ font-weight:bold; color:var(--navy); margin-bottom:8px; }
+  .options label{
+    display:block; margin:6px 0; cursor:pointer; padding:4px 6px; border-radius:6px;
+  }
+  .options input{ margin-right:8px; }
+  .feedback{ margin-top:8px; font-size:0.9em; font-weight:bold; }
+  .feedback.correct-text{color:var(--green);}
+  .feedback.incorrect-text{color:var(--red);}
+
+  .actions{ display:flex; gap:14px; margin:20px 0 10px; flex-wrap:wrap; }
+  .actions button{
+    font-family:Arial, sans-serif; padding:12px 24px; border-radius:8px; border:none;
+    background:var(--blue); color:#fff; font-weight:bold; font-size:1em; cursor:pointer;
+  }
+  .actions button.secondary{ background:#fff; color:var(--blue); border:2px solid var(--blue); }
+  .actions button:hover{opacity:0.88;}
+
+  /* Results modal */
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(15,42,74,0.55);
+    align-items:center; justify-content:center; z-index:50; padding:20px;
+  }
+  .modal-overlay.show{ display:flex; }
+  .modal-box{
+    background:#fff; border-radius:14px; padding:34px 30px; max-width:380px; width:100%;
+    text-align:center; font-family: Arial, sans-serif; box-shadow:0 10px 40px rgba(0,0,0,0.25);
+  }
+  .modal-emoji{ font-size:3em; margin-bottom:6px; }
+  .modal-phrase{ font-size:1.3em; font-weight:bold; color:var(--navy); margin-bottom:10px; }
+  .modal-score{ font-size:1.05em; color:var(--gray); margin-bottom:22px; }
+  .modal-box button{
+    font-family:Arial, sans-serif; padding:10px 28px; border-radius:8px; border:none;
+    background:var(--blue); color:#fff; font-weight:bold; font-size:1em; cursor:pointer;
+  }
+  .modal-box button:hover{opacity:0.88;}
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+<header>
+  <h1>Although / Despite / However</h1>
+  <p>Grammar reference &amp; interactive practice: linkers of contrast and concession</p>
+</header>
+
+<nav>
+  <button class="nav-btn active" data-page="theory">📘 Theory</button>
+  <button class="nav-btn" data-page="practice">✏️ Practice</button>
+</nav>
+
+<!-- ================= THEORY PAGE ================= -->
+<div class="page active" id="theory">
+  <div class="card">
+    <h2>Linkers of Contrast &amp; Concession</h2>
+    <table>
+      <tr><th>Linker</th><th>Pattern</th><th>Example</th></tr>
+      <tr>
+        <td class="linker">although</td>
+        <td>although + subject + verb</td>
+        <td class="example">Although cities are crowded, they offer more job opportunities.</td>
+      </tr>
+      <tr>
+        <td class="linker">even though</td>
+        <td>even though + subject + verb</td>
+        <td class="example">Even though rural life is peaceful, it can sometimes feel isolating.</td>
+      </tr>
+      <tr>
+        <td class="linker">though</td>
+        <td>though + subject + verb</td>
+        <td class="example">Though public transport is convenient, it can be overcrowded.</td>
+      </tr>
+      <tr>
+        <td class="linker">despite</td>
+        <td>despite + noun / -ing</td>
+        <td class="example">Despite the high cost of living, many people move to cities.</td>
+      </tr>
+      <tr>
+        <td class="linker">despite the fact that</td>
+        <td>despite the fact that + subject + verb</td>
+        <td class="example">Despite the fact that the city is crowded, she enjoys living there.</td>
+      </tr>
+      <tr>
+        <td class="linker">however</td>
+        <td>sentence linker; often at the beginning of a new sentence</td>
+        <td class="example">Rural areas are less polluted. However, they may offer fewer job opportunities.</td>
+      </tr>
+      <tr>
+        <td class="linker">on the other hand</td>
+        <td>introduces an opposing point</td>
+        <td class="example">City life can be stressful. On the other hand, it offers plenty of opportunities.</td>
+      </tr>
+      <tr>
+        <td class="linker">yet</td>
+        <td>joins contrasting ideas</td>
+        <td class="example">The village is small, yet it has everything we need.</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ================= PRACTICE PAGE ================= -->
+<div class="page" id="practice">
+  <div class="card">
+    <h2>Practice — Choose the correct linker</h2>
+    <p style="font-family:Arial, sans-serif; color:var(--gray);">
+      Select the best option for each sentence, then press <strong>Check answers</strong> at the end.
+    </p>
+  </div>
+  <div id="q-container"></div>
+  <div class="actions">
+    <button onclick="checkAnswers()">Check answers</button>
+    <button class="secondary" onclick="resetQuiz()">Reset</button>
+  </div>
+</div>
+
+<!-- Results modal -->
+<div class="modal-overlay" id="resultsModal">
+  <div class="modal-box">
+    <div class="modal-emoji" id="modalEmoji"></div>
+    <div class="modal-phrase" id="modalPhrase"></div>
+    <div class="modal-score" id="modalScore"></div>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.page).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+/* ---------------- QUESTION DATA ---------------- */
+const rawQuestions = [
+{q:"_____ the countryside is peaceful, some people find it boring.", options:["Despite","Although","However"], correct:"Although"},
+{q:"_____ the heavy traffic, we arrived on time.", options:["Despite","Even though","However"], correct:"Despite"},
+{q:"_____ the fact that housing is expensive, many young people move to the city.", options:["Even though","Yet","Despite"], correct:"Despite"},
+{q:"The village is quite remote. _____, it attracts a lot of tourists.", options:["Although","However","Despite"], correct:"However"},
+{q:"City life is exciting, _____ it can be exhausting.", options:["yet","despite","although"], correct:"yet"},
+{q:"_____ living far from the city centre, she enjoys her rural lifestyle.", options:["Although","Despite","However"], correct:"Despite"},
+{q:"_____ the public transport system is efficient, buses are often overcrowded.", options:["Despite","Even though","However"], correct:"Even though"},
+{q:"Living in a small town is affordable. _____, there are fewer job opportunities.", options:["On the other hand","Despite","Yet"], correct:"On the other hand"},
+{q:"_____ the weather was terrible, they went hiking.", options:["Despite","Though","However"], correct:"Though"},
+{q:"The countryside has fewer entertainment options, _____ many people prefer living there.", options:["despite","yet","however"], correct:"yet"},
+{q:"_____ the fact that the city is noisy, he doesn't want to move away.", options:["Despite","Yet","Although"], correct:"Despite"},
+{q:"_____ being surrounded by nature, rural residents may feel isolated.", options:["Despite","Although","However"], correct:"Despite"},
+{q:"The rent is high. _____, the flat is close to all the main facilities.", options:["Even though","However","Despite"], correct:"However"},
+{q:"_____ the village is small, it has a strong sense of community.", options:["Despite","Although","Despite the fact"], correct:"Although"},
+{q:"The commute takes over an hour. _____, she prefers living outside the city.", options:["On the other hand","Despite","Even though"], correct:"On the other hand"},
+{q:"_____ the lack of public transport, many people choose to live in the countryside.", options:["Despite","Though","Yet"], correct:"Despite"},
+{q:"_____ it is expensive to live in the city, young professionals continue to move there.", options:["Despite","Even though","However"], correct:"Even though"},
+{q:"The town has very few shops, _____ it has everything I need.", options:["despite","yet","however"], correct:"yet"},
+{q:"_____ the fact that rural areas are less polluted, some people prefer the convenience of cities.", options:["Despite","While","However"], correct:"Despite"},
+{q:"The city offers excellent career opportunities. _____, the countryside provides a more relaxed pace of life.", options:["Although","On the other hand","Despite"], correct:"On the other hand"}
+];
+
+/* ---------------- RESULTS TIERS (index = score, 0 = lowest) ---------------- */
+const tiers = [
+  {emoji:"🫣", phrase:"Keep trying!"},
+  {emoji:"🌱", phrase:"A little more practice!"},
+  {emoji:"🐢", phrase:"Don't give up!"},
+  {emoji:"🐣", phrase:"You're just getting started!"},
+  {emoji:"🍀", phrase:"Nice attempt!"},
+  {emoji:"🐝", phrase:"Keep up the effort!"},
+  {emoji:"🌷", phrase:"Not bad!"},
+  {emoji:"🐨", phrase:"You're making progress!"},
+  {emoji:"🎈", phrase:"Good effort!"},
+  {emoji:"🐬", phrase:"Getting better!"},
+  {emoji:"🍓", phrase:"Pretty good!"},
+  {emoji:"🦊", phrase:"Nice work!"},
+  {emoji:"🎨", phrase:"Well done!"},
+  {emoji:"🦋", phrase:"Very good!"},
+  {emoji:"⚡", phrase:"Great job!"},
+  {emoji:"🌟", phrase:"Impressive!"},
+  {emoji:"🥳", phrase:"Excellent work!"},
+  {emoji:"🦄", phrase:"Fantastic!"},
+  {emoji:"🔥", phrase:"Brilliant job!"},
+  {emoji:"🏆", phrase:"Almost perfect!"},
+  {emoji:"💎", phrase:"Absolutely outstanding!"}
+];
+
+/* Shuffle once per page load (per spec: only a refresh reshuffles) */
+function shuffle(array){
+  const arr = array.slice();
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+const qData = shuffle(rawQuestions);
+
+function buildQuiz(){
+  const container = document.getElementById('q-container');
+  container.innerHTML = '';
+  qData.forEach((item, idx)=>{
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.id = 'q-'+idx;
+    let optsHtml = '<div class="options">';
+    item.options.forEach((opt, oIdx)=>{
+      optsHtml += `<label><input type="radio" name="q-${idx}" value="${opt}"> ${opt}</label>`;
+    });
+    optsHtml += '</div>';
+    block.innerHTML = `
+      <div class="q-num">${idx+1}. ${item.q}</div>
+      ${optsHtml}
+      <div class="feedback" id="fb-${idx}"></div>
+    `;
+    container.appendChild(block);
+  });
+}
+buildQuiz();
+
+function checkAnswers(){
+  let score = 0;
+  qData.forEach((item, idx)=>{
+    const block = document.getElementById('q-'+idx);
+    const fb = document.getElementById('fb-'+idx);
+    const selected = document.querySelector(`input[name="q-${idx}"]:checked`);
+    block.classList.remove('correct','incorrect');
+    if(!selected){
+      fb.textContent = 'No answer selected.';
+      fb.className = 'feedback incorrect-text';
+      block.classList.add('incorrect');
+    } else if(selected.value === item.correct){
+      score++;
+      fb.textContent = '✓ Correct!';
+      fb.className = 'feedback correct-text';
+      block.classList.add('correct');
+    } else {
+      fb.textContent = '✗ Not quite. Correct answer: ' + item.correct;
+      fb.className = 'feedback incorrect-text';
+      block.classList.add('incorrect');
+    }
+  });
+  showResults(score);
+}
+
+function showResults(score){
+  const tier = tiers[score];
+  document.getElementById('modalEmoji').textContent = tier.emoji;
+  document.getElementById('modalPhrase').textContent = tier.phrase;
+  document.getElementById('modalScore').textContent = `Score: ${score} / ${qData.length}`;
+  document.getElementById('resultsModal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('resultsModal').classList.remove('show');
+}
+
+function resetQuiz(){
+  buildQuiz();
+  closeModal();
+}
+</script>
+
+</body>
+</html>
